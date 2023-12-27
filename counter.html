@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Counter App</h1>
+    <p id="counterDisplay">0</p>
+    <button id="counterButton">Start / Stop</button>
+    <button id="incrementButton">Increment</button>
+    <button id="decrementButton">Decrement</button>
+
+    <script>
+        class Counter {
+            constructor() {
+                this.counter = 0;
+                this.intervalId = null;
+                this.isAuto = false;
+
+                document.getElementById('counterButton').addEventListener('click', () => this.toggle());
+                document.getElementById('incrementButton').addEventListener('click', () => this.increment());
+                document.getElementById('decrementButton').addEventListener('click', () => this.decrement());
+            }
+
+            start() {
+                this.intervalId = setInterval(() => this.updateDisplay(++this.counter), 1000);
+            }
+
+            stop() {
+                clearInterval(this.intervalId);
+            }
+
+            increment() {
+                this.stop();
+                this.updateDisplay(++this.counter);
+            }
+
+            decrement() {
+                this.stop();
+                this.updateDisplay(--this.counter);
+            }
+
+            toggle() {
+                if (this.isAuto) {
+                    this.stop();
+                } else {
+                    this.start();
+                }
+
+                this.isAuto = !this.isAuto;
+            }
+
+            updateDisplay(value) {
+                document.getElementById('counterDisplay').textContent = value;
+            }
+        }
+
+        const counterInstance = new Counter();
+    </script>
+</body>
+</html>
